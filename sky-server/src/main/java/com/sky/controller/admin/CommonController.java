@@ -2,11 +2,9 @@ package com.sky.controller.admin;
 
 import com.sky.constant.MessageConstant;
 import com.sky.result.Result;
-import com.sky.utils.AliOssUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,7 +46,9 @@ public class CommonController {
             dest.getParentFile().mkdirs();
             // 保存文件到本地
             file.transferTo(dest);
-            return Result.success(dest.toString());
+            // 返回可访问的URL
+            String url = "http://localhost:8080/upload/" + objectName;
+            return Result.success(url);
         } catch (IOException e) {
             log.error("文件上传失败：{}", e);
         }
